@@ -15,6 +15,11 @@
     <%= flash[:notice] %>
   </div>
   <% end %>
+  <% unless alert.nil? %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+  <% end %>
 
   <% if current_user %>
     Signed in as <%= current_user.first_name %> <%= current_user.last_name %> | <%= link_to "Logout", '/logout' %>

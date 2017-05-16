@@ -1,6 +1,11 @@
 class CartsController < ApplicationController
+before_filter :authorize
 
   def show
+    if cart.blank?
+      redirect_to '/', alert: 'Oh no! Your cart is still empty, would you like to fill it with something?'
+    else
+    end
   end
 
   def add_item

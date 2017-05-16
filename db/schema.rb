@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20170516033339) do
     t.string   "password_digest"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.boolean  "admin", :default => false
+    t.boolean  "admin"
   end
 
   add_foreign_key "line_items", "orders"

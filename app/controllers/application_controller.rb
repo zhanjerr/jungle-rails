@@ -10,14 +10,14 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def authorize
-    redirect_to '/login' unless current_user
+    redirect_to '/login', alert: 'Not currently logged in' unless current_user
   end
 
   def authorize_admin
     if current_user
-      redirect_to '/', notice: 'Not an authorized admin' unless current_user.admin
+      redirect_to '/', alert: 'Not an authorized admin' unless current_user.admin
     else
-      redirect_to '/', notice: 'Not an authorized admin'
+      redirect_to '/', alert: 'Not an authorized admin'
     end
   end
 
