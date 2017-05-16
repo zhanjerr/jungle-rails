@@ -13,6 +13,14 @@ class ApplicationController < ActionController::Base
     redirect_to '/login' unless current_user
   end
 
+  def authorize_admin
+    if current_user
+      redirect_to '/', notice: 'Not an authorized admin' unless current_user.admin
+    else
+      redirect_to '/', notice: 'Not an authorized admin'
+    end
+  end
+
   private
 
   def cart
