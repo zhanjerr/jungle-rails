@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-puts "Seeding Data ..."
+puts 'Seeding Data ...'
 
 # Helper functions
 def open_asset(file_name)
@@ -15,7 +15,7 @@ end
 
 # Only run on development (local) instances not on production, etc.
 unless Rails.env.development?
-  puts "Development seeds only (for now)!"
+  puts 'Development seeds only (for now)!'
   exit 0
 end
 
@@ -23,7 +23,7 @@ end
 
 ## CATEGORIES
 
-puts "Finding or Creating Categories ..."
+puts 'Finding or Creating Categories ...'
 
 cat1 = Category.find_or_create_by! name: 'Apparel'
 cat2 = Category.find_or_create_by! name: 'Electronics'
@@ -31,11 +31,11 @@ cat3 = Category.find_or_create_by! name: 'Furniture'
 
 ## PRODUCTS
 
-puts "Re-creating Products ..."
+puts 'Re-creating Products ...'
 
 Product.destroy_all
 
-cat1.products.create!({
+product1 = cat1.products.create!({
   name:  'Men\'s Classy shirt',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel1.jpg'),
@@ -43,7 +43,7 @@ cat1.products.create!({
   price: 64.99
 })
 
-cat1.products.create!({
+product2 = cat1.products.create!({
   name:  'Women\'s Zebra pants',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel2.jpg'),
@@ -51,7 +51,7 @@ cat1.products.create!({
   price: 124.99
 })
 
-cat1.products.create!({
+product3 = cat1.products.create!({
   name:  'Hipster Hat',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel3.jpg'),
@@ -59,7 +59,7 @@ cat1.products.create!({
   price: 34.49
 })
 
-cat1.products.create!({
+product4 = cat1.products.create!({
   name:  'Hipster Socks',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel4.jpg'),
@@ -67,7 +67,7 @@ cat1.products.create!({
   price: 25.00
 })
 
-cat1.products.create!({
+product5 = cat1.products.create!({
   name:  'Russian Spy Shoes',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel5.jpg'),
@@ -75,7 +75,7 @@ cat1.products.create!({
   price: 1_225.00
 })
 
-cat1.products.create!({
+product6 = cat1.products.create!({
   name:  'Human Feet Shoes',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel6.jpg'),
@@ -84,7 +84,7 @@ cat1.products.create!({
 })
 
 
-cat2.products.create!({
+product7 = cat2.products.create!({
   name:  'Modern Skateboards',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('electronics1.jpg'),
@@ -92,7 +92,7 @@ cat2.products.create!({
   price: 164.49
 })
 
-cat2.products.create!({
+product8 = cat2.products.create!({
   name:  'Hotdog Slicer',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('electronics2.jpg'),
@@ -100,7 +100,7 @@ cat2.products.create!({
   price: 26.00
 })
 
-cat2.products.create!({
+product9 = cat2.products.create!({
   name:  'World\'s Largest Smartwatch',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('electronics3.jpg'),
@@ -108,7 +108,7 @@ cat2.products.create!({
   price: 2_026.29
 })
 
-cat3.products.create!({
+product10 = cat3.products.create!({
   name:  'Optimal Sleeping Bed',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('furniture1.jpg'),
@@ -116,7 +116,7 @@ cat3.products.create!({
   price: 3_052.00
 })
 
-cat3.products.create!({
+product11 = cat3.products.create!({
   name:  'Electric Chair',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('furniture2.jpg'),
@@ -124,7 +124,7 @@ cat3.products.create!({
   price: 987.65
 })
 
-cat3.products.create!({
+product12 = cat3.products.create!({
   name:  'Red Bookshelf',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('furniture3.jpg'),
@@ -132,5 +132,63 @@ cat3.products.create!({
   price: 2_483.75
 })
 
+##creat admin user
+puts 'Re-creating admin users ...'
+
+user1 = User.find_or_create_by!({
+  first_name: 'Bob',
+  last_name: 'Smith',
+  email: 'bob@smith.com',
+  password_digest: BCrypt::Password.create('1234'),
+  admin: true
+})
+
+user2 = User.find_or_create_by!({
+  first_name: 'Jungle',
+  last_name: 'Book',
+  email: 'jungle@book.com',
+  password_digest: BCrypt::Password.create('1234'),
+  admin: true
+})
+
+##create non-admin user
+puts 'Re-creating non-admin users ...'
+
+user3 = User.find_or_create_by!({
+  first_name: 'Jane',
+  last_name: 'Doe',
+  email: 'jane@doe.com',
+  password_digest: BCrypt::Password.create('1234'),
+})
+
+user4 = User.find_or_create_by!({
+  first_name: 'John',
+  last_name: 'Doe',
+  email: 'john@doe.com',
+  password_digest: BCrypt::Password.create('1234')
+})
+
+##creating reviews
+puts 'Creating reviews ...'
+
+Review.destroy_all
+
+product3.reviews.create!({
+  user: user3,
+  description: 'This product was total crap, avoid at all cost',
+  rating: 1
+})
+
+product7.reviews.create!({
+  user: user3,
+  description: 'Wow best thing the in world, but a bit pricey',
+  rating: 9
+})
+
+product3.reviews.create!({
+  user: user4,
+  description: 'Acceptable product',
+  rating: 5
+})
 
 puts "DONE!"

@@ -1,0 +1,19 @@
+<table class="table table-bordered">
+  <h2>Reviews</h2>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Review</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @product.reviews.each do |r| %>
+    <tr>
+      <td><%= r.user.first_name %> <%= r.user.last_name %></td>
+      <td><%= r.description %></td>
+      <td><%= r.rating %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
